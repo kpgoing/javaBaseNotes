@@ -117,7 +117,7 @@ java反射中可以使用f.setAccessible(true)来达到访问私有域的值。
 		```java
 		OuterClass.InnerClass
 		```
-98. 
+98. new innerClass 
 ```java
 outerObject.new InnerClass(construction parameters)
 ```
