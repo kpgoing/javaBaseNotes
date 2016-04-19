@@ -114,36 +114,38 @@ java反射中可以使用f.setAccessible(true)来达到访问私有域的值。
 95.  编译器修改了所有的内部类的构造器，添加一个外围类引用的参数。如果这个内部类没有定义构造器，编译器会为这个类生成一个默认的构造器。
 96.  表达式``OuterClass.this``表示外围类应用，如``TalkingClock.this.beep``。
 97.  在外围类的作用域之外，可以这样引用内部类：
-		```java
-		OuterClass.InnerClass
-		```
+
+	```java
+	OuterClass.InnerClass
+	```
+
 98. new innerClass 
-```java
-outerObject.new InnerClass(construction parameters)
-```
+
+	```java
+	outerObject.new InnerClass(construction parameters)
+	```
 99. 编译器会把内部类翻译成用$分隔外部类名域内部类名的常规类文件，而虚拟机则对此一无所知。
 100. 局部类不能用``public``或``private``访问说明符进行声明，它的作用域被限定在声明这个局部类的块中。除了它所在的那个方法之外，没有任何方法知道这个类的存在。
 101. 局部类不仅可以访问包含它们的外部类，还可以访问局部变量。不过，那些局部变量必须被声明为``final``.
 102. 编译器必须检测局部类对局部变量的访问，为每一个变量建立相应的数据域，并将局部变量拷贝到构造器中，以便将这些数据域初始化为局部变量的副本。
 103. 匿名内部类：
 
-```java
-new SuperType(conwtruction parameters)
-		{
-			inner classmethods and data
-		}		
-	new interfaceType()
-		{
-			methods and data
-}
-```
+	```java
+	new SuperType(conwtruction parameters)
+			{
+				inner classmethods and data
+			}		
+		new interfaceType()
+			{
+				methods and data
+	}
+	```
+
 104. 双括号初始化：
 		
-```java
-invite(new ArrayList<String>() {{ add("Harry"); add("Tony");}})
-```
-		
-		
+	```java
+	invite(new ArrayList<String>() {{ add("Harry"); 	add("Tony");}})
+	```
 	里边的花括号是初始化代码块。
 
 105. ```new Object(){}.getClass().getEnclosingClass()```可以get class of static method.
@@ -155,6 +157,24 @@ invite(new ArrayList<String>() {{ add("Harry"); add("Tony");}})
 		a. 错误的类型转换。
 		b. 数组访问越界。
 		c. 访问空指针.
+110. java语言规范将派生域Error类或RuntimeException类的所有异常称为__未检查(unchecked)异常__，所有其它异常称为__已检查(checked)异常__。
+111. 编译器将核查是否为所有的已检查异常提供了异常检查器。
+112. C++中的``runtime_error``相当于java中的``非RuntimeException``。
+113. 一个方法不仅需要告诉编译器将要返回什么值，还要告诉编译器有可能发生什么错误。
+114. 方法应该在其首部声明所有可能抛出的异常。
+115. 需要记住在遇到下面4种情况是应该抛出异常：
+
+		a. 调用一个抛出已检查异常的方法，例如，FileInputStreamm构造器。
+		b. 程序运行过程中发现错误，并且利用__throw语句抛出一个已检查异常。
+		c. 程序出现错误，例如数组越界访问抛出的未检查异常。
+		d. java虚拟机和运行时库出现的内部错误。
+116. 不需要声明java的内部错误，即从Error继承的错误。同样也不应该声明从``RuntimeException``,我们应该将更多的时间用在修正程序的错误上，而不是说明这些错误发生的可能性上。
+117. 总之，一个方法必须声明所有可能抛出的已检查异常，而未检查异常要么不可控制(__Error__),要么就应该避免发生(__RuntimeException__)。
+118. 如果在子类中覆盖了超类中的一个方法，子类方法中声明的已检查异常不能比超类的方法中声明的异常更通用（子类方法中不能抛出更特定的异常，或根本不抛出任何异常），所以如果超类方法没有抛出任何异常，那么子类方法也不应该抛出任何异常。
+119. 抛出的异常是某个特定类的实例的时候，则有可能抛出这个类的异常，也有可能是这个类的任意一个子类的异常。
+120. 在C++中，如果没有给出throw说明符，则函数可能会抛出任何异常，但在java中，没有throws说明符的方法不能抛出任何已检查异常。
+121. 在java中，只能抛出Throwable子类的对象，而在C++中，却可以抛出任何类型的值.
+122. 
 		
 		
 
