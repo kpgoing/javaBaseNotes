@@ -114,23 +114,29 @@ java反射中可以使用f.setAccessible(true)来达到访问私有域的值。
 95.  编译器修改了所有的内部类的构造器，添加一个外围类引用的参数。如果这个内部类没有定义构造器，编译器会为这个类生成一个默认的构造器。
 96.  表达式``OuterClass.this``表示外围类应用，如``TalkingClock.this.beep``。
 97.  在外围类的作用域之外，可以这样引用内部类：
-		```OuterClass.InnerClass```
-98. ```outerObject.new InnerClass(construction parameters)```
+		```java
+		OuterClass.InnerClass
+		```
+98. 
+```java
+outerObject.new InnerClass(construction parameters)
+```
 99. 编译器会把内部类翻译成用$分隔外部类名域内部类名的常规类文件，而虚拟机则对此一无所知。
 100. 局部类不能用``public``或``private``访问说明符进行声明，它的作用域被限定在声明这个局部类的块中。除了它所在的那个方法之外，没有任何方法知道这个类的存在。
 101. 局部类不仅可以访问包含它们的外部类，还可以访问局部变量。不过，那些局部变量必须被声明为``final``.
 102. 编译器必须检测局部类对局部变量的访问，为每一个变量建立相应的数据域，并将局部变量拷贝到构造器中，以便将这些数据域初始化为局部变量的副本。
 103. 匿名内部类：
-		
-		```new SuperType(conwtruction parameters)
+
+```java
+new SuperType(conwtruction parameters)
 		{
 			inner classmethods and data
-		}
-		
-		new interfaceType()
+		}		
+	new interfaceType()
 		{
 			methods and data
-		}```
+}
+```
 104. 双括号初始化：
 		
 ```java
