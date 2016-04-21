@@ -174,8 +174,53 @@ java反射中可以使用f.setAccessible(true)来达到访问私有域的值。
 119. 抛出的异常是某个特定类的实例的时候，则有可能抛出这个类的异常，也有可能是这个类的任意一个子类的异常。
 120. 在C++中，如果没有给出throw说明符，则函数可能会抛出任何异常，但在java中，没有throws说明符的方法不能抛出任何已检查异常。
 121. 在java中，只能抛出Throwable子类的对象，而在C++中，却可以抛出任何类型的值.
-122. 
+122. 独立使用try/catch和try/finally语句块，可以提高代码的清晰度。例如：
+
+	```java
+	InputStream in = ...;
+	try
+	{
+		try
+		{
+		 _code that might throw exceptions_
+		 }
+		 finally
+		 {
+		 	in.close();
+		 }
+	}
+	catch (IOException e)
+	{
+	 _show errpr ,essage_
+	 }
+	 ```
+	 这样有不仅清楚，还可以报告finally子句中出现的错误。
+
+123. finally中的return会覆盖掉之前的返回值。
+124. finally中抛出的异常可能会覆盖掉之前的异常。
+125. 带资源的try语句(__tr-with-resources__)的最简形式为
+
+	```java
+	try(Resource res = ...)
+	{
+		work with res
+	}
+	```
+	这样的try块退出时会自动调用res.close()，就好像使用了finally一样。这时候close产生的异常会被抑制，这些异常将自动捕获，并由addSuppressed方法增加到原来的异常。如果对这些异常感兴趣的话可以调用getSuppressed方法，它会得到从close方法抛出被抑制的异常列表.
+126. 早抛出，晚捕获。
+127. ```assert x >= 0: x;```，如果断言的结果为__false__，则会抛出以个AssertionError异常,x的值会在后面的错误报告中出现。
+128. 可以用```logp,entering,exiting```等方法来跟踪执行流。
+129. 可以用以下两个方法来记录异常：
+
+	```java
+	void throwing(String className, String methodName, Throwable t);
+	void log(Level l, String message, Throwable t)	```
+130. 默认情况下java日志配置文件存在于：```jre/lib/logging.properies```，可以用```java -Djava.util.logging.config.file=configFile MainClass```来使用其他的配置文件。
+	
 		
+
+
+
 		
 
 
